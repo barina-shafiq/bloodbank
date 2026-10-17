@@ -1,0 +1,66 @@
+﻿using BloodBankManagement.Models;
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize(Roles = "Admin,Hospital")]
+    public class DonorController : Controller
+    {
+        private readonly IDonorService _donorService;
+
+        public DonorController(IDonorService donorService)
+        {
+            _donorService = donorService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var donors = await _donorService.GetAllDonorsAsync();
+            var viewModels = donors.Select(d => new DonorViewModel
+            {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                BloodType = d.BloodType,
+                ContactNumber = d.ContactNumber,
+                Email = d.Email,
+                IsActive = d.IsActive
+            });
+            return View(viewModels);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(DonorViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var donor = new Donor
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    BloodType = model.BloodType,
+                    DateOfBirth = model.DateOfBirth,
+                    ContactNumber = model.ContactNumber,
+                    Email = model.Email,
+                    IsActive = true
+                };
+                await _donorService.AddDonorAsync(donor);
+                TempData["SuccessMessage"] = "Donor registered successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+    }
+}

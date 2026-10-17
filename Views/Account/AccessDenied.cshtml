@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Access Denied";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow border-0" style="background: rgba(30, 41, 59, 0.85); border-radius: 1rem;">
+                <div class="card-body py-5">
+                    <i class="fas fa-lock fa-3x text-danger mb-3"></i>
+                    <h2 class="text-white mb-3">Access Denied</h2>
+                    <p class="text-secondary mb-4">
+                        You don't have permission to access this page. 
+                        Please make sure you have selected the correct user type.
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light">
+                            <i class="fas fa-home me-1"></i> Go Home
+                        </a>
+                        <a asp-controller="UserType" asp-action="Select" class="btn btn-danger">
+                            <i class="fas fa-user-cog me-1"></i> Change User Type
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

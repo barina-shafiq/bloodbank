@@ -1,0 +1,120 @@
+@model IEnumerable<BloodBankManagement.ViewModels.DonorViewModel>
+@{
+    ViewData["Title"] = "Donors Directory";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4 mb-5">
+    <!-- Header Banner with Graphic -->
+    <div class="page-header-banner d-flex justify-content-between align-items-center">
+        <img src="~/images/donor_community.jpg" alt="Registered Donors Background" class="banner-bg-img" />
+        <div class="position-relative" style="z-index: 1;">
+            <h2 class="auth-title fw-bold text-white mb-1"><i class="fas fa-users me-2 text-danger"></i> Registered Donors</h2>
+            <p class="text-light opacity-90 small mb-0">Browse registered blood donors and automatically book donation appointments</p>
+        </div>
+        <div class="position-relative" style="z-index: 1;">
+            <a asp-action="Create" class="btn auth-btn rounded-pill px-4 shadow-lg">
+                <i class="fas fa-user-plus me-2"></i> Register New Donor
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show glass-panel text-white border-success border-opacity-50 mb-4" role="alert">
+            <i class="fas fa-check-circle me-2 text-success"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show glass-panel text-white border-danger border-opacity-50 mb-4" role="alert">
+            <i class="fas fa-exclamation-circle me-2 text-danger"></i> @TempData["ErrorMessage"]
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="glass-panel rounded-4 overflow-hidden p-3">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead class="border-bottom border-secondary border-opacity-25" style="background: rgba(15, 23, 42, 0.8);">
+                    <tr>
+                        <th class="py-3 px-4">Donor Details</th>
+                        <th class="py-3 px-4">Blood Group</th>
+                        <th class="py-3 px-4">Contact Info</th>
+                        <th class="py-3 px-4">Status</th>
+                        <th class="py-3 px-4 text-end">Instant Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+@{
+    var donors = Model ?? Enumerable.Empty<BloodBankManagement.ViewModels.DonorViewModel>();
+}
+
+@foreach (var donor in donors)
+                    {
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td class="py-3 px-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-danger bg-opacity-20 d-flex align-items-center justify-content-center me-3 text-white fw-bold border border-danger border-opacity-25" style="width: 44px; height: 44px;">
+                                        @{ var fi = !string.IsNullOrEmpty(donor.FirstName) ? donor.FirstName[0] : '?'; var li = !string.IsNullOrEmpty(donor.LastName) ? donor.LastName[0] : '?'; }
+                                        @fi@li
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-white fs-6">
+                                            @donor.FirstName @donor.LastName
+                                            <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-40 px-2 py-0.5 rounded-pill ms-2" style="font-size: 0.75rem;" title="Unique Donor ID">
+                                                <i class="fas fa-id-card me-1"></i> ID: #@donor.Id
+                                            </span>
+                                        </div>
+                                        <div class="small text-light opacity-75">@donor.Email</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="badge bg-danger rounded-pill px-3 py-1.5 fw-bold fs-6">
+                                    <i class="fas fa-droplet me-1"></i> @donor.BloodType
+                                </span>
+                            </td>
+                            <td class="py-3 px-4 text-light">@donor.ContactNumber</td>
+                            <td class="py-3 px-4">
+                                @if (donor.IsActive)
+                                {
+                                    <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30 rounded-pill px-3 py-1">
+                                        <i class="fas fa-circle-check me-1"></i> Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary bg-opacity-20 text-secondary border border-secondary border-opacity-30 rounded-pill px-3 py-1">
+                                        <i class="fas fa-circle-xmark me-1"></i> Inactive
+                                    </span>
+                                }
+                            </td>
+                            <td class="py-3 px-4 text-end">
+                                <div class="d-inline-flex gap-2 align-items-center">
+                                    <form asp-controller="Appointment" asp-action="QuickBook" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="donorId" value="@donor.Id" />
+                                        <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 shadow-sm fw-bold" title="Click to automatically book appointment for this donor">
+                                            <i class="fas fa-calendar-plus me-1"></i> Book Appointment
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    @if (!donors.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="fas fa-users-slash fa-3x text-light opacity-50 mb-3 d-block"></i>
+                                <span class="text-light opacity-75">No registered donors found.</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

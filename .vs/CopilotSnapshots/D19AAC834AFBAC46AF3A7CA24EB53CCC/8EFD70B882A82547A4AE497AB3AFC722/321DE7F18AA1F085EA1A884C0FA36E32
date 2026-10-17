@@ -1,0 +1,58 @@
+﻿using BloodBankManagement.Models;
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize(Roles = "Admin,Donor")]
+    public class AppointmentController : Controller
+    {
+        private readonly IAppointmentService _appointmentService;
+
+        public AppointmentController(IAppointmentService appointmentService)
+        {
+            _appointmentService = appointmentService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var appointments = await _appointmentService.GetAllAppointmentsAsync();
+            var viewModels = appointments.Select(a => new AppointmentViewModel
+            {
+                Id = a.Id,
+                DonorId = a.DonorId,
+                AppointmentDate = a.AppointmentDate,
+                Status = a.Status
+            });
+            return View(viewModels);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(AppointmentViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var appointment = new Appointment
+                {
+                    DonorId = model.DonorId, // In a real app, infer this from the logged-in Donor user
+                    AppointmentDate = model.AppointmentDate,
+                    Status = "Scheduled"
+                };
+                await _appointmentService.AddAppointmentAsync(appointment);
+                TempData["SuccessMessage"] = "Appointment scheduled successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+    }
+}

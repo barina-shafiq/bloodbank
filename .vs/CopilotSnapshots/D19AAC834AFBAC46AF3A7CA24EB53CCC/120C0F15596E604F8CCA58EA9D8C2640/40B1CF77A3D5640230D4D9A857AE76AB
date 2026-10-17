@@ -1,0 +1,47 @@
+﻿using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize(Roles = "Admin,Hospital")]
+    public class BloodInventoryController : Controller
+    {
+        private readonly IBloodInventoryService _inventoryService;
+
+        public BloodInventoryController(IBloodInventoryService inventoryService)
+        {
+            _inventoryService = inventoryService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var inventory = await _inventoryService.GetInventoryAsync();
+            var viewModels = inventory.Select(i => new BloodInventoryViewModel
+            {
+                Id = i.Id,
+                BloodGroup = i.BloodGroup,
+                Units = i.Units,
+                LastUpdated = i.LastUpdated
+            }).ToList();
+
+            return View(viewModels);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateInventory(string bloodGroup, int units)
+        {
+            if (!string.IsNullOrEmpty(bloodGroup) && units != 0)
+            {
+                await _inventoryService.UpdateInventoryAsync(bloodGroup, units);
+                TempData["SuccessMessage"] = $"Inventory for {bloodGroup} updated successfully.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

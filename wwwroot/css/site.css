@@ -1,0 +1,300 @@
+/* Premium Modern Styling for Blood Bank Management System */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #ef4444; /* Vibrant Red */
+    --primary-hover: #dc2626;
+    --secondary-color: #3b82f6; /* Trust Blue */
+    --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
+    --accent-purple: #8b5cf6;
+    --accent-cyan: #06b6d4;
+    --bg-gradient-start: #0f172a; /* Slate 900 */
+    --bg-gradient-end: #1e1b4b; /* Indigo 950 */
+    --text-main: #f8fafc;
+    --text-muted: #cbd5e1;
+    --glass-bg: rgba(15, 23, 42, 0.78);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+body {
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at 15% 15%, rgba(239, 68, 68, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                linear-gradient(135deg, var(--bg-gradient-start) 0%, #0d1117 50%, var(--bg-gradient-end) 100%);
+    background-attachment: fixed;
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Page Header Graphic Banners */
+.page-header-banner {
+    position: relative;
+    border-radius: 20px;
+    padding: 1.75rem 2rem;
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    margin-bottom: 2rem;
+}
+
+.page-header-banner .banner-bg-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 45%;
+    object-fit: cover;
+    opacity: 0.22;
+    mask-image: linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+    background: linear-gradient(135deg, #ffffff 0%, #ef4444 50%, #f87171 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gradient-text-blue {
+    background: linear-gradient(135deg, #ffffff 0%, #3b82f6 50%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Authentication Layouts */
+.auth-wrapper {
+    min-height: calc(100vh - 100px);
+    width: 100%;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 2.5rem;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.register-card {
+    max-width: 650px;
+}
+
+/* Glassmorphism Panels & Cards */
+.glass-panel {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border) !important;
+    box-shadow: var(--glass-shadow) !important;
+    border-radius: 20px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-panel-hover:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.glass-panel-hover:hover i {
+    transform: scale(1.15) rotate(4deg);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Status Indicator Pulsing Dots */
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-dot-active, .status-dot-approved, .status-dot-completed {
+    background-color: #10b981;
+    box-shadow: 0 0 10px #10b981;
+    animation: dotPulse 2s infinite;
+}
+
+.status-dot-pending {
+    background-color: #f59e0b;
+    box-shadow: 0 0 10px #f59e0b;
+    animation: dotPulse 2s infinite;
+}
+
+.status-dot-rejected, .status-dot-critical {
+    background-color: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+    animation: dotPulse 1.5s infinite;
+}
+
+@keyframes dotPulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.25); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Form Controls & Inputs - High Contrast Dark Theme */
+.form-control,
+.form-select,
+.auth-input {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
+    border-radius: 14px !important;
+    padding: 12px 18px;
+    height: 54px;
+    font-size: 0.95rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus,
+.auth-input:focus {
+    background-color: rgba(30, 41, 59, 0.95) !important;
+    border-color: var(--primary-color) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25) !important;
+}
+
+.form-control::placeholder,
+.auth-input::placeholder {
+    color: #64748b !important;
+}
+
+/* Disabled & Readonly Inputs */
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled,
+.auth-input:disabled,
+.auth-input[readonly] {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    color: #cbd5e1 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    opacity: 0.9 !important;
+    cursor: not-allowed;
+}
+
+/* Browser Autofill Overrides */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f8fafc !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1e293b inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    caret-color: #f8fafc !important;
+}
+
+/* Dropdown Option Items */
+.form-select option {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+}
+
+/* Calendar & Date Picker Icons */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.85);
+    cursor: pointer;
+}
+
+/* Form Labels & Titles */
+.form-label,
+label {
+    color: #cbd5e1 !important;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    margin-bottom: 0.4rem;
+}
+
+.auth-title {
+    font-weight: 700;
+    color: #f8fafc !important;
+    margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.auth-btn, .btn-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #b91c1c 100%);
+    color: white !important;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.35);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-btn:hover, .btn-gradient-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.5);
+    color: white !important;
+}
+
+.auth-btn:active, .btn-gradient-primary:active {
+    transform: translateY(0);
+}
+
+/* Links */
+.forgot-link, .register-link {
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+.forgot-link:hover, .register-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline !important;
+}
+
+/* Password Toggle Eye Button */
+.password-toggle-btn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    z-index: 10;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+    color: #f8fafc;
+}
+
+/* Tables Styling */
+.table-dark {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.04);
+    color: #f8fafc;
+}
+
+.table > :not(caption) > * > * {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}

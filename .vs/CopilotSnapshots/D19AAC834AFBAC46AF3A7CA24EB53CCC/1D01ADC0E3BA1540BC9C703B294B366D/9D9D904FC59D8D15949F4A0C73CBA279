@@ -1,0 +1,77 @@
+﻿using BloodBankManagement.Models;
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize(Roles = "Admin,Hospital")]
+    public class DonorController : Controller
+    {
+        private readonly IDonorService _donorService;
+        private readonly ILogger<DonorController> _logger;
+
+        public DonorController(IDonorService donorService, ILogger<DonorController> logger)
+        {
+            _donorService = donorService;
+            _logger = logger;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var donors = await _donorService.GetAllDonorsAsync() ?? Enumerable.Empty<Donor>();
+                var viewModels = donors.Select(d => new DonorViewModel
+                {
+                    Id = d.Id,
+                    FirstName = d.FirstName,
+                    LastName = d.LastName,
+                    BloodType = d.BloodType,
+                    ContactNumber = d.ContactNumber,
+                    Email = d.Email,
+                    IsActive = d.IsActive
+                }).ToList();
+                return View(viewModels);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Failed to load donors for dashboard.");
+                return View(new List<DonorViewModel>());
+            }
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(DonorViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var donor = new Donor
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    BloodType = model.BloodType,
+                    DateOfBirth = model.DateOfBirth,
+                    ContactNumber = model.ContactNumber,
+                    Email = model.Email,
+                    IsActive = true
+                };
+                await _donorService.AddDonorAsync(donor);
+                TempData["SuccessMessage"] = "Donor registered successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+    }
+}

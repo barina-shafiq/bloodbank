@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Identity
+@using BloodBankManagement.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav align-items-center">
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    var userRole = User.IsInRole("Admin") ? "Admin" : User.IsInRole("Donor") ? "Donor" : User.IsInRole("Hospital") ? "Hospital" : "Recipient";
+    
+    <li class="nav-item d-flex align-items-center me-3">
+        <div class="d-flex align-items-center gap-2 bg-dark bg-opacity-50 px-3 py-1.5 rounded-pill border border-secondary border-opacity-25">
+            <i class="fas fa-circle-user text-danger fa-lg"></i>
+            <div class="lh-1">
+                <span class="text-white fw-semibold small d-block">Hello, @(user?.FirstName ?? User.Identity?.Name)!</span>
+                <span class="badge bg-danger rounded-pill px-2 py-0.5" style="font-size: 0.65rem;">@userRole</span>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <form class="form-inline" asp-controller="Account" asp-action="Logout" method="post">
+            <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold">
+                <i class="fas fa-sign-out-alt me-1"></i> Logout
+            </button>
+        </form>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link px-3" asp-controller="Account" asp-action="Register"><i class="fas fa-user-plus me-1"></i> Register</a>
+    </li>
+    <li class="nav-item">
+        <a class="btn auth-btn rounded-pill px-4 ms-2 py-2" asp-controller="Account" asp-action="Login"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+    </li>
+}
+</ul>

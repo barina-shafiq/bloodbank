@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LifeSaver Blood Network</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BloodBankManagement.styles.css" asp-append-version="true" />
+    
+    <style>
+        .glass-navbar {
+            background: rgba(15, 23, 42, 0.85) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: #ef4444 !important;
+            letter-spacing: 0.5px;
+        }
+        .nav-link {
+            color: #cbd5e1 !important;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            border-radius: 10px;
+            padding: 8px 14px !important;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .alert-floating {
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(15, 23, 42, 0.9);
+            color: #f8fafc;
+        }
+        footer {
+            margin-top: auto;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark glass-navbar mb-4 py-2 sticky-top">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-droplet me-2 text-danger animate-pulse"></i> LifeSaver
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 gap-1">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-chart-pie me-1.5 text-danger"></i>Dashboard</a>
+                        </li>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @* ── Admin navigation ── *@
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodInventory" asp-action="Index"><i class="fas fa-cubes me-1.5 text-danger"></i>Inventory</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Donor" asp-action="Index"><i class="fas fa-users me-1.5 text-warning"></i>Donors</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Recipient" asp-action="Index"><i class="fas fa-user-injured me-1.5 text-info"></i>Recipients</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Hospital" asp-action="Index"><i class="fas fa-hospital me-1.5 text-primary"></i>Hospitals</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Appointment" asp-action="Index"><i class="fas fa-calendar-alt me-1.5 text-purple" style="color:#8b5cf6"></i>Appointments</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodRequest" asp-action="Index"><i class="fas fa-hand-holding-water me-1.5 text-warning"></i>Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodDonation" asp-action="Index"><i class="fas fa-syringe me-1.5 text-success"></i>Donations</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Donor"))
+                            {
+                                @* ── Donor navigation ── *@
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Donor" asp-action="Profile"><i class="fas fa-id-card me-1.5 text-danger"></i>My Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Appointment" asp-action="Create"><i class="fas fa-calendar-plus me-1.5 text-warning"></i>Book Appointment</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Appointment" asp-action="Index"><i class="fas fa-calendar-alt me-1.5 text-info"></i>My Appointments</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodDonation" asp-action="Index"><i class="fas fa-history me-1.5 text-success"></i>Donation History</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodInventory" asp-action="Index"><i class="fas fa-cubes me-1.5 text-danger"></i>Blood Stock</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Recipient"))
+                            {
+                                @* ── Recipient navigation ── *@
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Recipient" asp-action="Profile"><i class="fas fa-id-card me-1.5 text-info"></i>My Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodInventory" asp-action="Index"><i class="fas fa-cubes me-1.5 text-purple" style="color:#6366f1"></i>Search Stock</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodRequest" asp-action="Create"><i class="fas fa-paper-plane me-1.5 text-danger"></i>Request Blood</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodRequest" asp-action="Index"><i class="fas fa-history me-1.5 text-warning"></i>My Requests</a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Hospital"))
+                            {
+                                @* ── Hospital navigation ── *@
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Hospital" asp-action="Profile"><i class="fas fa-hospital me-1.5 text-info"></i>Hospital Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodInventory" asp-action="Index"><i class="fas fa-cubes me-1.5 text-purple" style="color:#6366f1"></i>Search Stock</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodRequest" asp-action="Create"><i class="fas fa-notes-medical me-1.5 text-danger"></i>Patient Blood Request</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="BloodRequest" asp-action="Index"><i class="fas fa-history me-1.5 text-warning"></i>Request History</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container flex-grow-1">
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show alert-floating mb-4" role="alert">
+                <i class="fas fa-check-circle me-2 text-success"></i> @TempData["SuccessMessage"]
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show alert-floating mb-4" role="alert">
+                <i class="fas fa-exclamation-circle me-2 text-danger"></i> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        <main role="main" class="pb-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="py-3 text-center text-light opacity-75 small">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <div>
+                <i class="fas fa-droplet text-danger me-1"></i> <strong>LifeSaver Blood Management System</strong> &copy; @DateTime.Now.Year
+            </div>
+            <div>
+                <span class="status-dot status-dot-active"></span> System Status: <strong class="text-white">Online & Healthy</strong>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

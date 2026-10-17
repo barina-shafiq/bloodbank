@@ -1,0 +1,107 @@
+@model BloodBankManagement.ViewModels.DonorViewModel
+@{
+    ViewData["Title"] = "My Donor Profile";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-40 px-3 py-1.5 rounded-pill fs-6">
+                        <i class="fas fa-id-card me-1"></i> Your Donor ID: #@Model.Id
+                    </span>
+                </div>
+            </div>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show glass-panel text-white border-success border-opacity-50 mb-4" role="alert">
+                    <i class="fas fa-check-circle me-2 text-success"></i> @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="glass-panel rounded-4 p-5 position-relative overflow-hidden" style="border-top: 4px solid var(--primary-color);">
+                <div class="text-center mb-4">
+                    <h2 class="auth-title"><i class="fas fa-user-circle me-2 text-danger"></i> My Donor Profile</h2>
+                    <p class="text-light opacity-75">Manage your personal details and blood donor profile</p>
+                </div>
+
+                <form asp-controller="Donor" asp-action="Profile" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="Email" />
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirstName" class="form-label">FIRST NAME</label>
+                            <input asp-for="FirstName" class="form-control auth-input" placeholder="e.g. Maryam" />
+                            <span asp-validation-for="FirstName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LastName" class="form-label">LAST NAME</label>
+                            <input asp-for="LastName" class="form-control auth-input" placeholder="e.g. Khan" />
+                            <span asp-validation-for="LastName" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="BloodType" class="form-label">BLOOD GROUP</label>
+                            <select asp-for="BloodType" class="form-select auth-input">
+                                <option value="">Select Blood Group...</option>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                            </select>
+                            <span asp-validation-for="BloodType" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContactNumber" class="form-label">CONTACT NUMBER</label>
+                            <input asp-for="ContactNumber" class="form-control auth-input" placeholder="e.g. +1 555-0199" />
+                            <span asp-validation-for="ContactNumber" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth" class="form-label">DATE OF BIRTH</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control auth-input" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">LAST DONATION DATE</label>
+                            <input value="@(Model.LastDonationDate?.ToString("yyyy-MM-dd") ?? "No donations recorded yet")" class="form-control auth-input" readonly disabled />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">REGISTERED EMAIL</label>
+                        <input class="form-control auth-input" value="@Model.Email" readonly disabled />
+                        <span class="text-info small mt-1 d-block"><i class="fas fa-info-circle me-1"></i> Email address is linked to your account.</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary border-opacity-25 pt-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-light px-4 rounded-pill">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+                        </a>
+                        <button type="submit" class="btn auth-btn px-5 rounded-pill">
+                            <i class="fas fa-check-circle me-2"></i> Save Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

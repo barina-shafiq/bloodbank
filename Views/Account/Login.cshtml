@@ -1,0 +1,91 @@
+@model BloodBankManagement.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_Layout";
+}
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <script>
+        window.location.replace('@Url.Action("Index", "Home")');
+    </script>
+}
+
+<div class="auth-wrapper d-flex align-items-center justify-content-center py-5">
+    <div class="auth-card glass-panel shadow-lg p-4 p-md-5" style="max-width: 480px; width: 100%; border-top: 4px solid var(--primary-color);">
+        <div class="text-center mb-4">
+            <div class="d-inline-flex p-3 rounded-circle bg-danger bg-opacity-20 mb-3 text-danger border border-danger border-opacity-25">
+                <i class="fas fa-droplet fa-2x animate-pulse"></i>
+            </div>
+            <h2 class="auth-title fw-bold text-white mb-2">Welcome Back to <span class="gradient-text">LifeSaver</span></h2>
+            <p class="text-light opacity-90 small">Sign in to manage your blood donations, requests & profile</p>
+        </div>
+
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form" id="loginForm">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-4">
+                <label asp-for="Email" class="form-label text-white fw-semibold mb-1" style="font-size: 0.9rem; letter-spacing: 0.5px;">
+                    <i class="fas fa-envelope me-1 text-danger"></i> EMAIL ADDRESS
+                </label>
+                <input asp-for="Email" class="form-control auth-input text-white fw-medium" autocomplete="email" aria-required="true" placeholder="e.g. maryam@example.com" style="background-color: rgba(30, 41, 59, 0.9) !important; color: #ffffff !important;" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Password" class="form-label text-white fw-semibold mb-1" style="font-size: 0.9rem; letter-spacing: 0.5px;">
+                    <i class="fas fa-lock me-1 text-danger"></i> PASSWORD
+                </label>
+                <div class="position-relative">
+                    <input asp-for="Password" id="loginPassword" class="form-control auth-input text-white fw-medium pe-5" autocomplete="current-password" aria-required="true" placeholder="Enter your password" style="background-color: rgba(30, 41, 59, 0.9) !important; color: #ffffff !important;" />
+                    <button type="button" class="password-toggle-btn" data-toggle-password="loginPassword" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye text-light"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <div class="checkbox mb-4 d-flex justify-content-between align-items-center">
+                <label asp-for="RememberMe" class="form-label text-white m-0 d-flex align-items-center cursor-pointer" style="font-size: 0.9rem;">
+                    <input class="form-check-input me-2 bg-dark border-secondary" asp-for="RememberMe" style="width: 18px; height: 18px;" />
+                    <span>@Html.DisplayNameFor(m => m.RememberMe)</span>
+                </label>
+                <a href="#" class="forgot-link text-decoration-none fw-semibold text-danger" style="font-size: 0.88rem;">Forgot Password?</a>
+            </div>
+
+            <button id="login-submit" type="submit" class="w-100 btn btn-lg auth-btn py-3 fw-bold rounded-pill text-white shadow-sm">
+                Log In to Account <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+
+            <div class="mt-4 text-center">
+                <p class="text-light opacity-90 m-0" style="font-size: 0.92rem;">
+                    Don't have an account? 
+                    <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="register-link fw-bold text-decoration-none text-danger ms-1">Register Now</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Prevent showing login/password page if navigated back via browser Back/Forward or bfcache
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType("navigation")[0]?.type === "back_forward")) {
+                window.location.replace('@Url.Action("Index", "Home")');
+            }
+        });
+
+        // When submitting credentials, replace current history state so 'Back' button doesn't return to password page
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function () {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, document.title, '@Url.Action("Index", "Home")');
+                }
+            });
+        }
+    </script>
+}

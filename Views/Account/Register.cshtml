@@ -1,0 +1,147 @@
+@model BloodBankManagement.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+    <script>
+        window.location.replace('@Url.Action("Index", "Home")');
+    </script>
+}
+
+<div class="auth-wrapper d-flex align-items-center justify-content-center py-5">
+    <div class="auth-card glass-panel register-card" style="max-width: 650px; width: 100%;">
+        <div class="text-center mb-4">
+            <h2 class="auth-title fw-bold text-white mb-2">Join Our LifeSaver Network</h2>
+            <p class="text-light opacity-75">Register an account as a Donor, Recipient, or Hospital partner</p>
+        </div>
+
+        <form asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form" id="registerForm">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirstName" class="form-label">First Name / Hospital Name</label>
+                    <input asp-for="FirstName" class="form-control auth-input" aria-required="true" placeholder="e.g. Maryam / City Hospital" />
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LastName" class="form-label">Last Name (Optional for Hospital)</label>
+                    <input asp-for="LastName" class="form-control auth-input" aria-required="false" placeholder="e.g. Khan" />
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email Address</label>
+                <input asp-for="Email" class="form-control auth-input" autocomplete="email" aria-required="true" placeholder="name@example.com" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <div class="position-relative">
+                        <input asp-for="Password" id="regPassword" class="form-control auth-input pe-5" autocomplete="new-password" aria-required="true" placeholder="Enter password" />
+                        <button type="button" class="password-toggle-btn" data-toggle-password="regPassword" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                    <div class="position-relative">
+                        <input asp-for="ConfirmPassword" id="regConfirmPassword" class="form-control auth-input pe-5" autocomplete="new-password" aria-required="true" placeholder="Confirm password" />
+                        <button type="button" class="password-toggle-btn" data-toggle-password="regConfirmPassword" aria-label="Toggle confirm password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label d-block mb-3 fw-semibold">Select Your User Role:</label>
+                <div class="row g-2">
+                    <div class="col-4">
+                        <div class="form-check custom-radio h-100 p-0">
+                            <input class="form-check-input d-none" type="radio" asp-for="Role" value="Donor" id="roleDonor" checked>
+                            <label class="form-check-label w-100 p-3 text-center rounded glass-btn h-100 d-flex flex-column justify-content-center align-items-center role-option-card" for="roleDonor">
+                                <i class="fas fa-hand-holding-medical fa-2x mb-2 text-danger"></i>
+                                <span class="fw-bold text-white d-block">Donor</span>
+                                <span class="small text-light opacity-75" style="font-size: 0.75rem;">Donate Blood</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check custom-radio h-100 p-0">
+                            <input class="form-check-input d-none" type="radio" asp-for="Role" value="Recipient" id="roleRecipient">
+                            <label class="form-check-label w-100 p-3 text-center rounded glass-btn h-100 d-flex flex-column justify-content-center align-items-center role-option-card" for="roleRecipient">
+                                <i class="fas fa-user-injured fa-2x mb-2 text-warning"></i>
+                                <span class="fw-bold text-white d-block">Recipient</span>
+                                <span class="small text-light opacity-75" style="font-size: 0.75rem;">Request Blood</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check custom-radio h-100 p-0">
+                            <input class="form-check-input d-none" type="radio" asp-for="Role" value="Hospital" id="roleHospital">
+                            <label class="form-check-label w-100 p-3 text-center rounded glass-btn h-100 d-flex flex-column justify-content-center align-items-center role-option-card" for="roleHospital">
+                                <i class="fas fa-hospital fa-2x mb-2 text-info"></i>
+                                <span class="fw-bold text-white d-block">Hospital</span>
+                                <span class="small text-light opacity-75" style="font-size: 0.75rem;">Patient Care</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <span asp-validation-for="Role" class="text-danger small"></span>
+            </div>
+
+            <button id="register-submit" type="submit" class="w-100 btn btn-lg auth-btn mt-2 py-3 fw-bold">Create Account <i class="fas fa-user-plus ms-2"></i></button>
+
+            <div class="mt-4 text-center">
+                <p class="text-light opacity-75 m-0">Already have an account? <a asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" class="register-link fw-bold text-decoration-none text-danger">Log in here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .role-option-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        background: rgba(30, 41, 59, 0.5);
+    }
+    input[type="radio"]:checked + .role-option-card {
+        border-color: #ef4444 !important;
+        background: rgba(239, 68, 68, 0.15) !important;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    }
+</style>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Prevent showing register/password page if navigated back via browser Back/Forward or bfcache
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted || (window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType("navigation")[0]?.type === "back_forward")) {
+                window.location.replace('@Url.Action("Index", "Home")');
+            }
+        });
+
+        // When submitting registration, replace current history state
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function () {
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, document.title, '@Url.Action("Index", "Home")');
+                }
+            });
+        }
+    </script>
+}

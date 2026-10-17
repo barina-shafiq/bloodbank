@@ -1,0 +1,66 @@
+@model IEnumerable<BloodBankManagement.ViewModels.RecipientViewModel>
+@{
+    ViewData["Title"] = "Recipients Directory";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4 mb-5">
+    <!-- Header Banner with Authentic Recipient / Blood Drop Care Graphic -->
+    <div class="page-header-banner d-flex justify-content-between align-items-center">
+        <img src="~/images/recipient_care.jpg" alt="Registered Recipients Background" class="banner-bg-img" />
+        <div class="position-relative" style="z-index: 1;">
+            <h2 class="auth-title fw-bold text-white mb-1"><i class="fas fa-user-injured me-2 text-warning"></i> Registered Recipients</h2>
+            <p class="text-light opacity-90 small mb-0">Directory of registered blood recipients and patient care requests</p>
+        </div>
+        <div class="position-relative" style="z-index: 1;">
+            <a asp-action="Create" class="btn auth-btn rounded-pill px-4 shadow-lg">
+                <i class="fas fa-user-plus me-2"></i> Register Recipient
+            </a>
+        </div>
+    </div>
+
+    <div class="glass-panel rounded-4 overflow-hidden p-3">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+                <thead class="border-bottom border-secondary" style="background: rgba(15, 23, 42, 0.6);">
+                    <tr>
+                        <th class="py-3 px-3">Name</th>
+                        <th class="py-3 px-3">Blood Group</th>
+                        <th class="py-3 px-3">Email</th>
+                        <th class="py-3 px-3">Contact</th>
+                        <th class="py-3 px-3">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var recipient in Model)
+                    {
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td class="py-3 px-3 fw-bold text-white">
+                                <i class="fas fa-user text-warning me-2"></i>@recipient.FirstName @recipient.LastName
+                            </td>
+                            <td class="py-3 px-3">
+                                <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold fs-6">@(string.IsNullOrEmpty(recipient.BloodGroup) ? "Not Specified" : recipient.BloodGroup)</span>
+                            </td>
+                            <td class="py-3 px-3 text-light">@recipient.Email</td>
+                            <td class="py-3 px-3 text-light">@(string.IsNullOrEmpty(recipient.ContactNumber) ? "N/A" : recipient.ContactNumber)</td>
+                            <td class="py-3 px-3">
+                                <span class="badge @(recipient.IsActive ? "bg-success" : "bg-secondary") rounded-pill px-3 py-1">
+                                    @(recipient.IsActive ? "Active" : "Inactive")
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="fas fa-users-slash fa-3x text-muted mb-3 d-block"></i>
+                                <span class="text-muted">No recipients registered.</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,230 @@
+/* Premium Modern Styling for Blood Bank Management System */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #ef4444; /* Vibrant Red */
+    --primary-hover: #dc2626;
+    --secondary-color: #3b82f6; /* Trust Blue */
+    --bg-gradient-start: #0f172a; /* Slate 900 */
+    --bg-gradient-end: #1e1b4b; /* Indigo 950 */
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    background-attachment: fixed;
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Authentication Layouts */
+.auth-wrapper {
+    min-height: calc(100vh - 100px);
+    width: 100%;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 2.5rem;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.register-card {
+    max-width: 600px;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+.auth-title {
+    font-weight: 700;
+    background: linear-gradient(to right, #f8fafc, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+/* Form Inputs */
+.form-floating > .form-control.auth-input {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.form-floating > .form-control.auth-input:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+    border-color: var(--primary-color);
+}
+
+.form-floating > label {
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.auth-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #b91c1c 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.auth-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px -10px var(--primary-color);
+    color: white;
+}
+
+.auth-btn:active {
+    transform: translateY(0);
+}
+
+/* Links */
+.forgot-link, .register-link {
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+.forgot-link:hover, .register-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline !important;
+}
+
+/* Custom Radio Buttons for Role Selection */
+.custom-radio .form-check-input {
+    display: none;
+}
+
+.glass-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.3s;
+    color: var(--text-muted);
+}
+
+.custom-radio .form-check-input:checked + .glass-btn {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--primary-color);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px -5px rgba(239, 68, 68, 0.4);
+}
+
+.custom-radio .form-check-input:checked + .glass-btn i {
+    transform: scale(1.1);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Role Welcome Banners */
+.role-welcome-banner {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.admin-banner {
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+.donor-banner {
+    background: rgba(249, 115, 22, 0.08);
+    border-color: rgba(249, 115, 22, 0.25);
+    color: #fb923c;
+}
+
+.hospital-banner {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.25);
+    color: #818cf8;
+}
+
+/* Badge CTAs inside dashboard cards */
+.badge-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border: 1px solid;
+    margin-top: 8px;
+    transition: all 0.3s ease;
+}
+
+.donor-cta {
+    background: rgba(239, 68, 68, 0.12);
+    color: #f87171;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+/* Non-floating auth input */
+.auth-input {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    border-radius: 12px;
+    padding: 14px 16px;
+    height: 58px;
+    transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+    border-color: var(--primary-color);
+    background: rgba(15, 23, 42, 0.6);
+    color: white;
+}
+
+/* Improve readability of muted text and form labels inside glass panels */
+.glass-panel .text-muted {
+    color: #cbd5e1 !important;
+}
+
+.glass-panel label.text-muted {
+    color: #f1f5f9 !important;
+    letter-spacing: 0.5px;
+}

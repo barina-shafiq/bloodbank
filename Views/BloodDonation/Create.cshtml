@@ -1,0 +1,65 @@
+@model BloodBankManagement.ViewModels.BloodDonationViewModel
+@{
+    ViewData["Title"] = "Log Donation";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="glass-panel rounded-3 p-5 position-relative overflow-hidden" style="border-top: 4px solid #10b981;">
+                <div class="text-center mb-4">
+                    <h2 class="auth-title"><i class="fas fa-file-medical me-2 text-success"></i> Log Blood Donation</h2>
+                    <p class="text-muted">Record a successful blood donation to update the inventory</p>
+                </div>
+
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="DonorId" class="form-label text-muted small fw-bold">DONOR ID</label>
+                        <input asp-for="DonorId" class="form-control auth-input" placeholder="Donor UUID" required />
+                        <span asp-validation-for="DonorId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="DonationDate" class="form-label text-muted small fw-bold">DONATION DATE</label>
+                            <input asp-for="DonationDate" class="form-control auth-input" type="date" required />
+                            <span asp-validation-for="DonationDate" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="BloodGroup" class="form-label text-muted small fw-bold">BLOOD GROUP</label>
+                            <select asp-for="BloodGroup" class="form-select bg-dark text-white border-secondary border-opacity-50" style="border-radius:12px; height: 58px;" required>
+                                <option value="">Select...</option>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                            </select>
+                            <span asp-validation-for="BloodGroup" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="UnitsDonated" class="form-label text-muted small fw-bold">UNITS</label>
+                            <input asp-for="UnitsDonated" class="form-control auth-input" type="number" min="1" max="10" required />
+                            <span asp-validation-for="UnitsDonated" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info bg-info bg-opacity-10 border-info border-opacity-25 text-info mt-3 rounded-3">
+                        <i class="fas fa-info-circle me-2"></i> Submitting this log will automatically add the units to the live Blood Inventory.
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 border-top border-secondary border-opacity-25 pt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4 rounded-pill">Cancel</a>
+                        <button type="submit" class="btn btn-success px-5 rounded-pill" style="box-shadow: 0 10px 20px -10px #10b981;">Log Donation <i class="fas fa-save ms-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,95 @@
+﻿using BloodBankManagement.Models;
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize]
+    public class BloodRequestController : Controller
+    {
+        private readonly IBloodRequestService _requestService;
+        private readonly ILogger<BloodRequestController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public BloodRequestController(IBloodRequestService requestService, ILogger<BloodRequestController> logger, UserManager<ApplicationUser> userManager)
+        {
+            _requestService = requestService;
+            _logger = logger;
+            _userManager = userManager;
+        }
+
+        [Authorize(Roles = Models.Roles.AdminAndHospital)]
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var requests = await _requestService.GetAllRequestsAsync();
+                var viewModels = requests.Select(r => new BloodRequestViewModel
+                {
+                    Id = r.Id,
+                    HospitalId = r.HospitalId,
+                    RequestDate = r.RequestDate,
+                    BloodGroup = r.BloodGroup,
+                    UnitsRequested = r.UnitsRequested,
+                    Status = r.Status
+                });
+                return View(viewModels);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Failed to load blood requests for dashboard.");
+                return View(new List<BloodRequestViewModel>());
+            }
+        }
+
+        [Authorize(Roles = Models.Roles.Admin + "," + Models.Roles.Hospital + "," + Models.Roles.Donor)]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = Models.Roles.Admin + "," + Models.Roles.Hospital + "," + Models.Roles.Donor)]
+        public async Task<IActionResult> Create(BloodRequestViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = new BloodRequest
+                {
+                    HospitalId = model.HospitalId, // In a real app, infer this from the logged-in Hospital user or leave null for donor-created requests
+                    RequestDate = DateTime.UtcNow,
+                    BloodGroup = model.BloodGroup,
+                    UnitsRequested = model.UnitsRequested,
+                    Status = "Pending"
+                };
+                await _requestService.AddRequestAsync(request);
+                TempData["SuccessMessage"] = "Blood request submitted successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Models.Roles.Admin)]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, string newStatus)
+        {
+            var request = await _requestService.GetRequestByIdAsync(id);
+            if (request != null)
+            {
+                request.Status = newStatus;
+                await _requestService.UpdateRequestAsync(request);
+                TempData["SuccessMessage"] = $"Request status updated to {newStatus}.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

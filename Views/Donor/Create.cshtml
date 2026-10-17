@@ -1,0 +1,76 @@
+@model BloodBankManagement.ViewModels.DonorViewModel
+@{
+    ViewData["Title"] = "Register Donor";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="glass-panel rounded-3 p-5 position-relative overflow-hidden" style="border-top: 4px solid var(--primary-color);">
+                <div class="text-center mb-4">
+                    <h2 class="auth-title"><i class="fas fa-user-plus me-2 text-danger"></i> Register New Donor</h2>
+                    <p class="text-muted">Enter donor details below to add them to the directory</p>
+                </div>
+
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirstName" class="form-label text-muted small fw-bold">FIRST NAME</label>
+                            <input asp-for="FirstName" class="form-control auth-input" placeholder="John" />
+                            <span asp-validation-for="FirstName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LastName" class="form-label text-muted small fw-bold">LAST NAME</label>
+                            <input asp-for="LastName" class="form-control auth-input" placeholder="Doe" />
+                            <span asp-validation-for="LastName" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="BloodType" class="form-label text-muted small fw-bold">BLOOD TYPE</label>
+                            <select asp-for="BloodType" class="form-select bg-dark text-white border-secondary border-opacity-50" style="border-radius:12px; height: 58px;">
+                                <option value="">Select Blood Type...</option>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                            </select>
+                            <span asp-validation-for="BloodType" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth" class="form-label text-muted small fw-bold">DATE OF BIRTH</label>
+                            <input asp-for="DateOfBirth" class="form-control auth-input" type="date" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContactNumber" class="form-label text-muted small fw-bold">CONTACT NUMBER</label>
+                            <input asp-for="ContactNumber" class="form-control auth-input" placeholder="+1 234 567 8900" />
+                            <span asp-validation-for="ContactNumber" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Email" class="form-label text-muted small fw-bold">EMAIL ADDRESS</label>
+                            <input asp-for="Email" class="form-control auth-input" placeholder="john@example.com" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 border-top border-secondary border-opacity-25 pt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4 rounded-pill">Cancel</a>
+                        <button type="submit" class="btn auth-btn px-5 rounded-pill">Register Donor <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

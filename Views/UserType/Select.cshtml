@@ -1,0 +1,464 @@
+@{
+    ViewData["Title"] = "Choose Your Role";
+    Layout = "_Layout";
+}
+
+<style>
+    /* ── Page background ── */
+    body {
+        background: #0a0f1e;
+        min-height: 100vh;
+    }
+
+    .role-page-wrapper {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 16px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Ambient glow blobs */
+    .role-page-wrapper::before {
+        content: '';
+        position: absolute;
+        top: -120px;
+        left: -120px;
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(239,68,68,0.18) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .role-page-wrapper::after {
+        content: '';
+        position: absolute;
+        bottom: -120px;
+        right: -80px;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* ── Heading section ── */
+    .role-heading {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+    .role-heading .badge-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(239,68,68,0.12);
+        border: 1px solid rgba(239,68,68,0.3);
+        color: #f87171;
+        padding: 6px 16px;
+        border-radius: 100px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+    .role-heading h1 {
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-weight: 800;
+        color: #f1f5f9;
+        margin: 0 0 12px;
+        line-height: 1.2;
+    }
+    .role-heading h1 span {
+        background: linear-gradient(135deg, #ef4444, #f97316);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .role-heading p {
+        color: #94a3b8;
+        font-size: 1.05rem;
+        max-width: 480px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* ── Cards grid ── */
+    .role-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        max-width: 780px;
+        width: 100%;
+    }
+    @@media (max-width: 600px) {
+        .role-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ── Individual card ── */
+    .role-card {
+        position: relative;
+        border-radius: 20px;
+        padding: 36px 28px 32px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background: rgba(15, 23, 42, 0.7);
+        border: 2px solid rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+    .role-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .role-card:hover {
+        transform: translateY(-6px);
+    }
+
+    /* Donor card */
+    .role-card.donor::before {
+        background: linear-gradient(135deg, rgba(239,68,68,0.12), rgba(249,115,22,0.08));
+    }
+    .role-card.donor:hover {
+        border-color: rgba(239,68,68,0.5);
+        box-shadow: 0 20px 60px rgba(239,68,68,0.2);
+    }
+    .role-card.donor:hover::before { opacity: 1; }
+
+    /* Recipient card */
+    .role-card.recipient::before {
+        background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.08));
+    }
+    .role-card.recipient:hover {
+        border-color: rgba(99,102,241,0.5);
+        box-shadow: 0 20px 60px rgba(99,102,241,0.2);
+    }
+    .role-card.recipient:hover::before { opacity: 1; }
+
+    /* Selected state */
+    .role-card.selected.donor {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 1px rgba(239,68,68,0.4), 0 20px 60px rgba(239,68,68,0.25);
+        transform: translateY(-6px);
+    }
+    .role-card.selected.donor::before { opacity: 1; }
+
+    .role-card.selected.recipient {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 1px rgba(99,102,241,0.4), 0 20px 60px rgba(99,102,241,0.25);
+        transform: translateY(-6px);
+    }
+    .role-card.selected.recipient::before { opacity: 1; }
+
+    /* Check badge */
+    .check-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        opacity: 0;
+        transition: opacity 0.25s, transform 0.25s;
+        transform: scale(0.5);
+    }
+    .role-card.selected .check-badge {
+        opacity: 1;
+        transform: scale(1);
+    }
+    .donor .check-badge { background: #ef4444; color: white; }
+    .recipient .check-badge { background: #6366f1; color: white; }
+
+    /* Icon */
+    .role-icon {
+        width: 68px;
+        height: 68px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+    }
+    .donor .role-icon {
+        background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(249,115,22,0.15));
+        color: #f87171;
+        border: 1px solid rgba(239,68,68,0.25);
+    }
+    .recipient .role-icon {
+        background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.15));
+        color: #818cf8;
+        border: 1px solid rgba(99,102,241,0.25);
+    }
+
+    /* Text */
+    .role-card h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #f1f5f9;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+    .role-card p {
+        font-size: 0.88rem;
+        color: #94a3b8;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Feature list */
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 24px;
+        position: relative;
+        z-index: 1;
+    }
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.82rem;
+        color: #cbd5e1;
+        margin-bottom: 8px;
+    }
+    .feature-list li .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+    .donor .dot { background: #ef4444; }
+    .recipient .dot { background: #6366f1; }
+
+    /* CTA inside card */
+    .card-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 22px;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: filter 0.2s, transform 0.2s;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        justify-content: center;
+    }
+    .card-cta:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .card-cta:active { transform: translateY(0); }
+    .donor .card-cta {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 4px 20px rgba(239,68,68,0.35);
+    }
+    .recipient .card-cta {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: white;
+        box-shadow: 0 4px 20px rgba(99,102,241,0.35);
+    }
+
+    /* Divider label */
+    .or-divider {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: #475569;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    @@media (min-width: 601px) {
+        .or-divider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 28px;
+        }
+        .or-divider::before, .or-divider::after {
+            content: '';
+            flex: 1;
+            width: 1px;
+            height: 100%;
+            background: rgba(255,255,255,0.08);
+            margin: 6px 0;
+        }
+    }
+
+    /* Hidden radio inputs */
+    .hidden-radio { display: none; }
+
+    /* Submit section */
+    .submit-area {
+        margin-top: 36px;
+        text-align: center;
+    }
+    .submit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 48px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 6px 30px rgba(239,68,68,0.4);
+        transition: all 0.25s;
+        letter-spacing: 0.3px;
+    }
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(239,68,68,0.5);
+        filter: brightness(1.08);
+    }
+    .submit-btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    .submit-hint {
+        margin-top: 14px;
+        color: #475569;
+        font-size: 0.82rem;
+    }
+</style>
+
+<div class="role-page-wrapper">
+    <div style="width:100%; max-width:820px; position:relative; z-index:1;">
+
+        <!-- Heading -->
+        <div class="role-heading">
+            <div class="badge-pill">
+                <i class="fas fa-droplet"></i>
+                LifeSaver Blood Bank
+            </div>
+            <h1>How would you like to <span>participate?</span></h1>
+            <p>Select your role to personalise your experience. You can always update this from your profile settings.</p>
+        </div>
+
+        <!-- Form -->
+        <form asp-action="Select" method="post" id="roleForm">
+            <input class="hidden-radio" type="radio" name="selectedType" value="Donor" id="donorRadio" />
+            <input class="hidden-radio" type="radio" name="selectedType" value="Recipient" id="recipientRadio" />
+
+            <div class="role-cards">
+
+                <!-- ── Donor Card ── -->
+                <div class="role-card donor" id="donorCard" onclick="selectRole('Donor')">
+                    <div class="check-badge"><i class="fas fa-check"></i></div>
+                    <div class="role-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3>Blood Donor</h3>
+                    <p>Give the gift of life. Register as a donor and help patients in need receive life-saving blood.</p>
+                    <ul class="feature-list">
+                        <li><span class="dot"></span>Schedule donation appointments</li>
+                        <li><span class="dot"></span>Track your donation history</li>
+                        <li><span class="dot"></span>View your health impact</li>
+                        <li><span class="dot"></span>Get notified when your blood is needed</li>
+                    </ul>
+                    <button type="button" class="card-cta" onclick="event.stopPropagation(); selectAndSubmit('Donor')">
+                        <i class="fas fa-hand-holding-heart"></i> I'm a Donor
+                    </button>
+                </div>
+
+                <!-- ── Recipient Card ── -->
+                <div class="role-card recipient" id="recipientCard" onclick="selectRole('Recipient')">
+                    <div class="check-badge"><i class="fas fa-check"></i></div>
+                    <div class="role-icon">
+                        <i class="fas fa-hospital-user"></i>
+                    </div>
+                    <h3>Recipient / Hospital</h3>
+                    <p>Request blood for patients or manage hospital inventory. Quick access to available blood units.</p>
+                    <ul class="feature-list">
+                        <li><span class="dot"></span>Submit blood requests instantly</li>
+                        <li><span class="dot"></span>Check real-time blood inventory</li>
+                        <li><span class="dot"></span>Track request status</li>
+                        <li><span class="dot"></span>Manage hospital blood needs</li>
+                    </ul>
+                    <button type="button" class="card-cta" onclick="event.stopPropagation(); selectAndSubmit('Recipient')">
+                        <i class="fas fa-hospital"></i> I'm a Recipient
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Bottom submit -->
+            <div class="submit-area">
+                <button type="submit" class="submit-btn" id="continueBtn" disabled>
+                    <i class="fas fa-arrow-right"></i> Continue
+                </button>
+                <p class="submit-hint">Select a role above to continue</p>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+    let selectedRole = null;
+
+    function selectRole(role) {
+        selectedRole = role;
+
+        const donorCard = document.getElementById('donorCard');
+        const recipientCard = document.getElementById('recipientCard');
+        const continueBtn = document.getElementById('continueBtn');
+        const hint = document.querySelector('.submit-hint');
+
+        donorCard.classList.remove('selected');
+        recipientCard.classList.remove('selected');
+
+        if (role === 'Donor') {
+            document.getElementById('donorRadio').checked = true;
+            donorCard.classList.add('selected');
+            hint.textContent = 'You selected Donor — click Continue to proceed';
+        } else {
+            document.getElementById('recipientRadio').checked = true;
+            recipientCard.classList.add('selected');
+            hint.textContent = 'You selected Recipient — click Continue to proceed';
+        }
+
+        continueBtn.disabled = false;
+        continueBtn.style.background = role === 'Donor'
+            ? 'linear-gradient(135deg, #ef4444, #dc2626)'
+            : 'linear-gradient(135deg, #6366f1, #4f46e5)';
+        continueBtn.style.boxShadow = role === 'Donor'
+            ? '0 6px 30px rgba(239,68,68,0.45)'
+            : '0 6px 30px rgba(99,102,241,0.45)';
+    }
+
+    function selectAndSubmit(role) {
+        selectRole(role);
+        // Small delay for visual feedback, then submit
+        setTimeout(() => {
+            document.getElementById('roleForm').submit();
+        }, 280);
+    }
+</script>

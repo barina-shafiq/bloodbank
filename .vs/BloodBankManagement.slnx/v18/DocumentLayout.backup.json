@@ -1,0 +1,277 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\views\\usertype\\select.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:views\\usertype\\select.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\views\\blooddonation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:views\\blooddonation\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\views\\bloodrequest\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:views\\bloodrequest\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\views\\bloodrequest\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:views\\bloodrequest\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\views\\donor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:views\\donor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\blooddonationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\blooddonationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\donorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\donorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\bloodinventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\bloodinventorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\bloodrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\bloodrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:models\\roles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:data\\dbinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\usertypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\usertypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|c:\\users\\barina\\desktop\\desktop development\\bloodbankmanagement\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE4850CD-0624-D811-7980-8A041771C71C}|BloodBankManagement.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAABRwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T12:34:48.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Select.cshtml",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\UserType\\Select.cshtml",
+              "RelativeDocumentMoniker": "Views\\UserType\\Select.cshtml",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\UserType\\Select.cshtml",
+              "RelativeToolTip": "Views\\UserType\\Select.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-19T12:34:39.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserTypeController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\UserTypeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserTypeController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\UserTypeController.cs",
+              "RelativeToolTip": "Controllers\\UserTypeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T12:34:31.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodDonation\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\BloodDonation\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodDonation\\Index.cshtml",
+              "RelativeToolTip": "Views\\BloodDonation\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-19T12:28:59.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodRequest\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\BloodRequest\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodRequest\\Create.cshtml",
+              "RelativeToolTip": "Views\\BloodRequest\\Create.cshtml",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAWwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-19T12:28:46.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodRequest\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\BloodRequest\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\BloodRequest\\Index.cshtml",
+              "RelativeToolTip": "Views\\BloodRequest\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-19T12:28:36.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\Donor\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Donor\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Views\\Donor\\Index.cshtml",
+              "RelativeToolTip": "Views\\Donor\\Index.cshtml",
+              "ViewState": "AgIAABcAAAAAAAAAAAAlwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-19T12:25:31.226Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BloodDonationController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodDonationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BloodDonationController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodDonationController.cs",
+              "RelativeToolTip": "Controllers\\BloodDonationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T12:09:31.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DonorController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\DonorController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DonorController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\DonorController.cs",
+              "RelativeToolTip": "Controllers\\DonorController.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAswAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:20:15.576Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BloodInventoryController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodInventoryController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BloodInventoryController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodInventoryController.cs",
+              "RelativeToolTip": "Controllers\\BloodInventoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:17:35.389Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppointmentController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\AppointmentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AppointmentController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\AppointmentController.cs",
+              "RelativeToolTip": "Controllers\\AppointmentController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T12:09:41.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "BloodRequestController.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodRequestController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BloodRequestController.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Controllers\\BloodRequestController.cs",
+              "RelativeToolTip": "Controllers\\BloodRequestController.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAWwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:17:49.334Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Roles.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Models\\Roles.cs",
+              "RelativeDocumentMoniker": "Models\\Roles.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Models\\Roles.cs",
+              "RelativeToolTip": "Models\\Roles.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:56:47.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DbInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Data\\DbInitializer.cs",
+              "RelativeDocumentMoniker": "Data\\DbInitializer.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Data\\DbInitializer.cs",
+              "RelativeToolTip": "Data\\DbInitializer.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:00:53.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-19T11:00:17.716Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Barina\\Desktop\\Desktop development\\BloodBankManagement\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAACjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-18T19:50:18.886Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

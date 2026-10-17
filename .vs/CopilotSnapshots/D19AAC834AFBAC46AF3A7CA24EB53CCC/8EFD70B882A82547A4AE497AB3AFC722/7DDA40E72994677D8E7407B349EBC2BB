@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BloodBankManagement.ViewModels.DonorViewModel>
+@{
+    ViewData["Title"] = "Donors Directory";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="auth-title"><i class="fas fa-users me-2 text-danger"></i> Registered Donors</h2>
+        <a asp-action="Create" class="btn btn-outline-light rounded-pill px-4">
+            <i class="fas fa-user-plus me-2"></i> Register New Donor
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show glass-panel text-white border-success border-opacity-50" role="alert">
+            <i class="fas fa-check-circle me-2"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="glass-panel rounded-3 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover table-borderless mb-0 align-middle">
+                <thead class="border-bottom border-secondary border-opacity-25" style="background: rgba(0,0,0,0.2);">
+                    <tr>
+                        <th class="py-3 px-4 text-muted fw-normal">Name</th>
+                        <th class="py-3 px-4 text-muted fw-normal">Blood Type</th>
+                        <th class="py-3 px-4 text-muted fw-normal">Contact</th>
+                        <th class="py-3 px-4 text-muted fw-normal">Status</th>
+                        <th class="py-3 px-4 text-muted fw-normal text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var donor in Model)
+                    {
+                        <tr class="border-bottom border-secondary border-opacity-10">
+                            <td class="py-3 px-4">
+                                <div class="d-flex align-items-center">
+                                    <div class="rounded-circle bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center me-3 text-white fw-bold" style="width: 40px; height: 40px;">
+                                        @donor.FirstName[0]@donor.LastName[0]
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold text-white">@donor.FirstName @donor.LastName</div>
+                                        <div class="small text-muted">@donor.Email</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="badge bg-danger rounded-pill px-3 py-2 fw-bold" style="font-size: 0.9rem;">
+                                    <i class="fas fa-droplet me-1"></i> @donor.BloodType
+                                </span>
+                            </td>
+                            <td class="py-3 px-4 text-light">@donor.ContactNumber</td>
+                            <td class="py-3 px-4">
+                                @if (donor.IsActive)
+                                {
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill px-3 py-1">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill px-3 py-1">Inactive</span>
+                                }
+                            </td>
+                            <td class="py-3 px-4 text-end">
+                                <a href="#" class="btn btn-sm btn-outline-light rounded-circle" title="View Details"><i class="fas fa-eye"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-info rounded-circle ms-1" title="Edit"><i class="fas fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-5">
+                                <i class="fas fa-users-slash fa-3x text-muted mb-3 d-block"></i>
+                                <span class="text-muted">No donors registered yet.</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,467 @@
+@model BloodBankManagement.ViewModels.AdminDashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4 mb-5">
+    <!-- Hero Banner Section with Image -->
+    <div class="row align-items-center mb-5 py-4 g-4">
+        <div class="col-lg-7">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill mb-3" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);">
+                <span class="status-dot status-dot-active"></span>
+                <span class="small fw-semibold text-danger">Real-Time Blood Donor Network Active</span>
+            </div>
+            <h1 class="display-4 fw-bold text-white mb-3" style="line-height: 1.2;">
+                Saving Lives with Every Drop at <span class="gradient-text">LifeSaver</span>
+            </h1>
+            <p class="lead text-light opacity-90 mb-4" style="line-height: 1.7; font-size: 1.15rem;">
+                Empowering life-saving connections through automated blood donor management, hospital emergency request fulfillment, and real-time inventory tracking.
+            </p>
+            
+            @if (User.Identity == null || !User.Identity.IsAuthenticated)
+            {
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Account" asp-action="Register" class="btn auth-btn btn-lg px-4 rounded-pill fw-bold shadow-lg">
+                        Get Started <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg px-4 rounded-pill">
+                        Log In to Portal <i class="fas fa-sign-in-alt ms-1"></i>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="d-flex align-items-center gap-3">
+                    <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill"><i class="fas fa-user-check me-1"></i> Logged In</span>
+                    <span class="text-light opacity-90 fw-semibold">Welcome back to your dashboard</span>
+                </div>
+            }
+        </div>
+
+        <div class="col-lg-5 text-center position-relative">
+            <div class="position-absolute top-50 start-50 translate-middle rounded-circle" style="width: 280px; height: 280px; background: rgba(239, 68, 68, 0.25); filter: blur(60px); z-index: 0;"></div>
+            <div class="glass-panel p-2 rounded-4 position-relative shadow-lg overflow-hidden glass-panel-hover" style="z-index: 1; border: 2px solid rgba(239, 68, 68, 0.3);">
+                <img src="~/images/hero_blood_donation.jpg" alt="Blood Donation in Progress" class="img-fluid rounded-3" style="max-height: 380px; width: 100%; object-fit: cover;" />
+                <div class="position-absolute bottom-0 start-0 end-0 p-3 bg-dark bg-opacity-75 backdrop-blur d-flex justify-content-between align-items-center border-top border-secondary border-opacity-25">
+                    <span class="text-white small fw-bold"><i class="fas fa-shield-heart text-danger me-1"></i> 100% Verified Donors</span>
+                    <span class="badge bg-success rounded-pill px-2.5 py-1 small"><i class="fas fa-bolt me-1"></i> Live Inventory Sync</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3 Distinct Role Portal Cards (For Guest / Registration Entry) -->
+    @if (User.Identity == null || !User.Identity.IsAuthenticated)
+    {
+        <div class="mb-5">
+            <div class="text-center mb-4">
+                <h2 class="text-white fw-bold"><i class="fas fa-hands-holding-circle text-danger me-2"></i> Our Life-Saving Network</h2>
+                <p class="text-light opacity-75">Connecting compassionate donors, recipients, and hospitals in real-time</p>
+            </div>
+            <div class="row g-4">
+                <!-- 1. Blood Donor Portal Card -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden" style="border-top: 4px solid #ef4444;">
+                        <div>
+                            <div class="overflow-hidden rounded-3 mb-3" style="height: 180px;">
+                                <img src="~/images/donor_community.jpg" alt="Become a Blood Donor" class="img-fluid w-100 h-100" style="object-fit: cover; transition: transform 0.4s ease;" />
+                            </div>
+                            <h4 class="text-white fw-bold mb-2">
+                                <i class="fas fa-hand-holding-medical text-danger me-2"></i> Become a Blood Donor
+                            </h4>
+                            <p class="text-light opacity-75 small mb-3" style="line-height: 1.6;">
+                                Register as a donor to schedule appointment dates, track your blood donation history, and receive emergency donation alerts.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-top border-secondary border-opacity-25 mt-2">
+                            <a asp-controller="Account" asp-action="Register" asp-route-role="Donor" class="btn btn-outline-danger w-100 rounded-pill fw-bold">
+                                Register as Donor <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Recipient Portal Card -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden" style="border-top: 4px solid #f59e0b;">
+                        <div>
+                            <div class="overflow-hidden rounded-3 mb-3" style="height: 180px;">
+                                <img src="~/images/recipient_care.jpg" alt="Recipient Portal" class="img-fluid w-100 h-100" style="object-fit: cover; transition: transform 0.4s ease;" />
+                            </div>
+                            <h4 class="text-white fw-bold mb-2">
+                                <i class="fas fa-user-injured text-warning me-2"></i> Recipient Portal
+                            </h4>
+                            <p class="text-light opacity-75 small mb-3" style="line-height: 1.6;">
+                                Register as a blood recipient to search live blood stock levels by blood group and submit blood requests with automatic verification.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-top border-secondary border-opacity-25 mt-2">
+                            <a asp-controller="Account" asp-action="Register" asp-route-role="Recipient" class="btn btn-outline-warning w-100 rounded-pill fw-bold">
+                                Recipient Registration <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Hospital Partner Portal Card -->
+                <div class="col-lg-4 col-md-6 mx-auto">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 h-100 d-flex flex-column justify-content-between position-relative overflow-hidden" style="border-top: 4px solid #3b82f6;">
+                        <div>
+                            <div class="overflow-hidden rounded-3 mb-3" style="height: 180px;">
+                                <img src="~/images/hospital_care.jpg" alt="Hospital Partner Portal" class="img-fluid w-100 h-100" style="object-fit: cover; transition: transform 0.4s ease;" />
+                            </div>
+                            <h4 class="text-white fw-bold mb-2">
+                                <i class="fas fa-hospital text-info me-2"></i> Hospital Partner Portal
+                            </h4>
+                            <p class="text-light opacity-75 small mb-3" style="line-height: 1.6;">
+                                Partner hospitals can register to request blood for patients, track supply fulfillment, and integrate emergency medical inventory.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-top border-secondary border-opacity-25 mt-2">
+                            <a asp-controller="Account" asp-action="Register" asp-route-role="Hospital" class="btn btn-outline-info w-100 rounded-pill fw-bold">
+                                Hospital Registration <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Authenticated Role Dashboards -->
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Admin") && Model != null)
+        {
+            @* ── Admin Comprehensive Dashboard ── *@
+            <div class="role-welcome-banner admin-banner mb-4 d-flex justify-content-between align-items-center p-3 rounded-4">
+                <div>
+                    <i class="fas fa-shield-halved text-danger me-2 fa-lg"></i>
+                    <strong class="text-white">Administrator Control Panel</strong>
+                    <span class="text-light opacity-75 d-block small">System-wide monitoring, user management, and automated stock workflows</span>
+                </div>
+                <span class="badge bg-danger px-3 py-2 fs-6 rounded-pill"><i class="fas fa-user-shield me-1"></i> System Admin</span>
+            </div>
+
+            <!-- Key Metric Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-3 col-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center border-start border-4 border-danger h-100">
+                        <div class="d-inline-flex p-3 rounded-circle bg-danger bg-opacity-20 mb-3 text-danger">
+                            <i class="fas fa-hand-holding-medical fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold text-white mb-1">@Model.TotalDonors</h2>
+                        <span class="text-light opacity-75 small fw-semibold">Total Registered Donors</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center border-start border-4 border-warning h-100">
+                        <div class="d-inline-flex p-3 rounded-circle bg-warning bg-opacity-20 mb-3 text-warning">
+                            <i class="fas fa-user-injured fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold text-white mb-1">@Model.TotalRecipients</h2>
+                        <span class="text-light opacity-75 small fw-semibold">Total Recipients</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center border-start border-4 border-info h-100">
+                        <div class="d-inline-flex p-3 rounded-circle bg-info bg-opacity-20 mb-3 text-info">
+                            <i class="fas fa-hospital fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold text-white mb-1">@Model.TotalHospitals</h2>
+                        <span class="text-light opacity-75 small fw-semibold">Partner Hospitals</span>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center border-start border-4 border-success h-100">
+                        <div class="d-inline-flex p-3 rounded-circle bg-success bg-opacity-20 mb-3 text-success">
+                            <i class="fas fa-syringe fa-2x"></i>
+                        </div>
+                        <h2 class="fw-bold text-white mb-1">@Model.CompletedDonations</h2>
+                        <span class="text-light opacity-75 small fw-semibold">Completed Donations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Status Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle p-3 me-3" style="background: rgba(139, 92, 246, 0.2);">
+                                <i class="fas fa-calendar-alt fa-2x" style="color: #8b5cf6;"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-bold mb-1">Pending Appointments</h5>
+                                <span class="text-light opacity-75 small">Awaiting Admin review & scheduling</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-primary px-3 py-2 fs-5 rounded-pill">@Model.PendingAppointments</span>
+                            <a asp-controller="Appointment" asp-action="Index" class="btn btn-sm btn-outline-light d-block mt-2 rounded-pill">Manage <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="glass-panel glass-panel-hover p-4 rounded-4 d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle p-3 me-3" style="background: rgba(245, 158, 11, 0.2);">
+                                <i class="fas fa-hand-holding-water fa-2x text-warning"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white fw-bold mb-1">Pending Blood Requests</h5>
+                                <span class="text-light opacity-75 small">Awaiting stock validation & approval</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-warning text-dark px-3 py-2 fs-5 rounded-pill">@Model.PendingBloodRequests</span>
+                            <a asp-controller="BloodRequest" asp-action="Index" class="btn btn-sm btn-outline-light d-block mt-2 rounded-pill">Manage <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blood Stock by Group -->
+            <div class="glass-panel p-4 rounded-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-white fw-bold m-0"><i class="fas fa-cubes text-danger me-2"></i>Live Blood Stock Levels</h4>
+                    <span class="badge bg-danger px-3 py-2 rounded-pill"><i class="fas fa-vial me-1"></i> Total Units: @Model.TotalBloodUnits</span>
+                </div>
+                <div class="row g-3">
+                    @foreach (var inv in Model.InventoryList)
+                    {
+                        <div class="col-lg-3 col-md-4 col-6">
+                            <div class="p-3 rounded-4 text-center glass-panel-hover" style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255,255,255,0.08);">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-danger fs-6 px-3 py-1 rounded-pill">@inv.BloodGroup</span>
+                                    <span class="text-light opacity-75 small fw-bold">@inv.Units unit(s)</span>
+                                </div>
+                                <div class="progress rounded-pill" style="height: 10px; background: rgba(15, 23, 42, 0.8);">
+                                    <div class="progress-bar rounded-pill @(inv.Units < 5 ? "bg-danger" : inv.Units < 10 ? "bg-warning" : "bg-success")" 
+                                         role="progressbar" 
+                                         style="width: @(Math.Min(inv.Units * 5, 100))%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Recent Activity Tables -->
+            <div class="row g-4 mb-4">
+                <div class="col-lg-6">
+                    <div class="glass-panel p-4 rounded-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="text-white fw-bold mb-0"><i class="fas fa-calendar-check text-info me-2"></i>Recent Appointments</h5>
+                            <a asp-controller="Appointment" asp-action="Index" class="btn btn-sm btn-outline-info rounded-pill px-3">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Donor</th>
+                                        <th>Date & Time</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.RecentAppointments.Any())
+                                    {
+                                        @foreach (var appt in Model.RecentAppointments)
+                                        {
+                                            <tr>
+                                                <td class="fw-semibold text-white">@appt.DonorName <span class="badge bg-danger ms-1 rounded-pill">@appt.DonorBloodType</span></td>
+                                                <td class="small text-light opacity-75">@appt.AppointmentDate.ToString("MMM dd, yyyy HH:mm")</td>
+                                                <td>
+                                                    <span class="badge rounded-pill @(appt.Status == "Completed" ? "bg-success" : appt.Status == "Approved" ? "bg-info" : appt.Status == "Rejected" ? "bg-danger" : "bg-warning")">
+                                                        @appt.Status
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="3" class="text-muted text-center py-3">No recent appointments.</td></tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="glass-panel p-4 rounded-4 h-100">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="text-white fw-bold mb-0"><i class="fas fa-hand-holding-water text-warning me-2"></i>Recent Blood Requests</h5>
+                            <a asp-controller="BloodRequest" asp-action="Index" class="btn btn-sm btn-outline-warning rounded-pill px-3">View All</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Requester</th>
+                                        <th>Blood / Units</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.RecentRequests.Any())
+                                    {
+                                        @foreach (var req in Model.RecentRequests)
+                                        {
+                                            <tr>
+                                                <td class="fw-semibold text-white">
+                                                    @(req.HospitalName ?? req.RecipientName ?? req.PatientName ?? "Request #" + req.Id)
+                                                </td>
+                                                <td><span class="badge bg-danger rounded-pill">@req.BloodGroup</span> (@req.UnitsRequested units)</td>
+                                                <td>
+                                                    <span class="badge rounded-pill @(req.Status == "Approved" ? "bg-success" : req.Status == "Rejected" ? "bg-danger" : "bg-warning")">
+                                                        @req.Status
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr><td colspan="3" class="text-muted text-center py-3">No recent blood requests.</td></tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Donor"))
+        {
+            @* ── Donor Portal Hub ── *@
+            <div class="role-welcome-banner donor-banner mb-4 p-3 rounded-4">
+                <i class="fas fa-heart-pulse text-danger me-2 fa-lg"></i>
+                <strong class="text-white">Donor Portal</strong> — Thank you for being a life-saver!
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="Donor" asp-action="Profile" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #ef4444;">
+                            <i class="fas fa-id-card fa-3x text-danger mb-3"></i>
+                            <h4 class="text-white fw-bold">My Profile</h4>
+                            <p class="text-light opacity-75 small">Update your blood type, contact details, and info.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="Appointment" asp-action="Create" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #f97316;">
+                            <i class="fas fa-calendar-plus fa-3x mb-3" style="color:#f97316"></i>
+                            <h4 class="text-white fw-bold">Book Appointment</h4>
+                            <p class="text-light opacity-75 small">Schedule a donation date & time convenient for you.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="Appointment" asp-action="Index" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #3b82f6;">
+                            <i class="fas fa-calendar-alt fa-3x text-info mb-3"></i>
+                            <h4 class="text-white fw-bold">My Appointments</h4>
+                            <p class="text-light opacity-75 small">Track pending, approved, and completed appointments.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <a asp-controller="BloodDonation" asp-action="Index" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #10b981;">
+                            <i class="fas fa-syringe fa-3x text-success mb-3"></i>
+                            <h4 class="text-white fw-bold">Donation History</h4>
+                            <p class="text-light opacity-75 small">View all your completed donations and impact.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Recipient"))
+        {
+            @* ── Recipient Portal Hub ── *@
+            <div class="role-welcome-banner mb-4 p-3 rounded-4" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3);">
+                <i class="fas fa-user-injured text-warning me-2 fa-lg"></i>
+                <strong class="text-white">Recipient Portal</strong> — Search available stock and manage blood requests.
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <a asp-controller="Home" asp-action="RecipientProfile" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #14b8a6;">
+                            <i class="fas fa-id-card fa-3x mb-3" style="color:#14b8a6"></i>
+                            <h4 class="text-white fw-bold">My Profile</h4>
+                            <p class="text-light opacity-75 small">Manage your contact details and required blood group.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a asp-controller="BloodInventory" asp-action="Index" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #6366f1;">
+                            <i class="fas fa-cubes fa-3x mb-3" style="color:#6366f1"></i>
+                            <h4 class="text-white fw-bold">Search Stock</h4>
+                            <p class="text-light opacity-75 small">Check live stock units for your blood type.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a asp-controller="BloodRequest" asp-action="Create" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #ec4899;">
+                            <i class="fas fa-paper-plane fa-3x mb-3" style="color: #ec4899;"></i>
+                            <h4 class="text-white fw-bold">Request Blood</h4>
+                            <p class="text-light opacity-75 small">Request blood units with real-time stock verification.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Hospital"))
+        {
+            @* ── Hospital Portal Hub ── *@
+            <div class="role-welcome-banner mb-4 p-3 rounded-4" style="background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3);">
+                <i class="fas fa-hospital text-info me-2 fa-lg"></i>
+                <strong class="text-white">Hospital Partner Portal</strong> — Patient blood requests & medical supply management.
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <a asp-controller="Hospital" asp-action="Profile" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #06b6d4;">
+                            <i class="fas fa-hospital-user fa-3x mb-3" style="color:#06b6d4"></i>
+                            <h4 class="text-white fw-bold">Hospital Profile</h4>
+                            <p class="text-light opacity-75 small">Manage hospital contact info & facility address.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-controller="BloodInventory" asp-action="Index" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #6366f1;">
+                            <i class="fas fa-cubes fa-3x mb-3" style="color:#6366f1"></i>
+                            <h4 class="text-white fw-bold">Check Blood Stock</h4>
+                            <p class="text-light opacity-75 small">Review stock levels across all blood types.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-controller="BloodRequest" asp-action="Create" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #ec4899;">
+                            <i class="fas fa-notes-medical fa-3x mb-3" style="color: #ec4899;"></i>
+                            <h4 class="text-white fw-bold">Patient Request</h4>
+                            <p class="text-light opacity-75 small">Request blood for patients with patient details.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-3">
+                    <a asp-controller="BloodRequest" asp-action="Index" class="text-decoration-none">
+                        <div class="glass-panel glass-panel-hover p-4 rounded-4 text-center h-100" style="border-top: 4px solid #eab308;">
+                            <i class="fas fa-history fa-3x text-warning mb-3"></i>
+                            <h4 class="text-white fw-bold">Request History</h4>
+                            <p class="text-light opacity-75 small">Track status & history of all hospital requests.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    }
+</div>

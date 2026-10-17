@@ -1,0 +1,102 @@
+@model BloodBankManagement.ViewModels.BloodRequestViewModel
+@{
+    ViewData["Title"] = "Submit Blood Request";
+    Layout = "_Layout";
+    var stockDict = ViewBag.InventoryStock as Dictionary<string, int> ?? new Dictionary<string, int>();
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+            <div class="glass-panel rounded-4 p-4 p-md-5 position-relative overflow-hidden" style="border-top: 4px solid #f59e0b;">
+                <div class="text-center mb-4">
+                    <h2 class="auth-title fw-bold text-white"><i class="fas fa-hand-holding-water me-2 text-warning"></i> Submit Blood Request</h2>
+                    <p class="text-muted">Request blood units from system inventory for patient care or medical need</p>
+                </div>
+
+                <!-- Stock Preview Grid -->
+                <div class="p-3 rounded-3 mb-4" style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255,255,255,0.08);">
+                    <span class="text-muted small fw-bold d-block mb-2 text-uppercase"><i class="fas fa-cubes me-1 text-danger"></i> Current Available Stock Levels:</span>
+                    <div class="d-flex flex-wrap gap-2 justify-content-between">
+                        @foreach (var bg in new[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" })
+                        {
+                            int units = stockDict.ContainsKey(bg) ? stockDict[bg] : 0;
+                            <div class="badge p-2 px-3 text-center border @(units > 0 ? "border-success bg-dark text-white" : "border-danger bg-dark text-muted")">
+                                <strong class="text-danger">@bg</strong>: <span>@units unit(s)</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="HospitalId" class="form-label text-muted small fw-bold">SELECT HOSPITAL (OPTIONAL)</label>
+                                <select asp-for="HospitalId" class="form-select bg-dark text-white border-secondary border-opacity-50" style="border-radius:12px; height: 50px;">
+                                    <option value="">-- Independent Recipient Request --</option>
+                                    @if (ViewBag.Hospitals != null)
+                                    {
+                                        foreach (var hospital in (IEnumerable<BloodBankManagement.Models.Hospital>)ViewBag.Hospitals)
+                                        {
+                                            <option value="@hospital.Id">@hospital.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="RecipientId" class="form-label text-muted small fw-bold">RECIPIENT ID (OPTIONAL)</label>
+                                <input asp-for="RecipientId" class="form-control auth-input" placeholder="Enter Recipient ID" />
+                            </div>
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="BloodGroup" class="form-label text-muted small fw-bold">BLOOD GROUP REQUIRED</label>
+                            <select asp-for="BloodGroup" class="form-select bg-dark text-white border-secondary border-opacity-50" style="border-radius:12px; height: 50px;" required>
+                                <option value="">Select Blood Group...</option>
+                                <option value="A+">A+</option><option value="A-">A-</option>
+                                <option value="B+">B+</option><option value="B-">B-</option>
+                                <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                                <option value="O+">O+</option><option value="O-">O-</option>
+                            </select>
+                            <span asp-validation-for="BloodGroup" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="UnitsRequested" class="form-label text-muted small fw-bold">UNITS REQUIRED</label>
+                            <input asp-for="UnitsRequested" class="form-control auth-input" type="number" min="1" max="100" required placeholder="Number of units" />
+                            <span asp-validation-for="UnitsRequested" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PatientName" class="form-label text-muted small fw-bold">PATIENT NAME / CODE</label>
+                            <input asp-for="PatientName" class="form-control auth-input" placeholder="e.g. John Doe / Bed 102" />
+                            <span asp-validation-for="PatientName" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PatientDetails" class="form-label text-muted small fw-bold">MEDICAL REASON / DETAILS</label>
+                            <input asp-for="PatientDetails" class="form-control auth-input" placeholder="e.g. Surgery, Anemia, Emergency" />
+                            <span asp-validation-for="PatientDetails" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4 border-top border-secondary border-opacity-25 pt-4">
+                        <a asp-action="Index" class="btn btn-outline-secondary px-4 rounded-pill">Cancel</a>
+                        <button type="submit" class="btn auth-btn px-5 rounded-pill fw-bold">Submit Blood Request <i class="fas fa-paper-plane ms-2"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

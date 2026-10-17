@@ -1,0 +1,58 @@
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize]
+    public class BloodInventoryController : Controller
+    {
+        private readonly IBloodInventoryService _inventoryService;
+        private readonly ILogger<BloodInventoryController> _logger;
+
+        public BloodInventoryController(IBloodInventoryService inventoryService, ILogger<BloodInventoryController> logger)
+        {
+            _inventoryService = inventoryService;
+            _logger = logger;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var inventory = await _inventoryService.GetInventoryAsync();
+                var viewModels = inventory.Select(i => new BloodInventoryViewModel
+                {
+                    Id = i.Id,
+                    BloodGroup = i.BloodGroup,
+                    Units = i.Units,
+                    LastUpdated = i.LastUpdated
+                }).ToList();
+
+                return View(viewModels);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Failed to load inventory for dashboard.");
+                return View(new List<BloodInventoryViewModel>());
+            }
+        }
+
+        [Authorize(Roles = Models.Roles.Admin)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateInventory(string bloodGroup, int units)
+        {
+            if (!string.IsNullOrEmpty(bloodGroup) && units != 0)
+            {
+                await _inventoryService.UpdateInventoryAsync(bloodGroup, units);
+                TempData["SuccessMessage"] = $"Inventory for {bloodGroup} updated successfully.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

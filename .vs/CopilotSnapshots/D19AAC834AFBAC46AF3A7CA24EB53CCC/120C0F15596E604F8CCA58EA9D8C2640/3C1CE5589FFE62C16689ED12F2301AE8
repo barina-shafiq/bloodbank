@@ -1,0 +1,78 @@
+﻿using BloodBankManagement.Models;
+using BloodBankManagement.Services;
+using BloodBankManagement.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
+using System;
+
+namespace BloodBankManagement.Controllers
+{
+    [Authorize(Roles = "Admin,Hospital")]
+    public class BloodRequestController : Controller
+    {
+        private readonly IBloodRequestService _requestService;
+
+        public BloodRequestController(IBloodRequestService requestService)
+        {
+            _requestService = requestService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var requests = await _requestService.GetAllRequestsAsync();
+            var viewModels = requests.Select(r => new BloodRequestViewModel
+            {
+                Id = r.Id,
+                HospitalId = r.HospitalId,
+                RequestDate = r.RequestDate,
+                BloodGroup = r.BloodGroup,
+                UnitsRequested = r.UnitsRequested,
+                Status = r.Status
+            });
+            return View(viewModels);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(BloodRequestViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = new BloodRequest
+                {
+                    HospitalId = model.HospitalId, // In a real app, infer this from the logged-in Hospital user
+                    RequestDate = DateTime.UtcNow,
+                    BloodGroup = model.BloodGroup,
+                    UnitsRequested = model.UnitsRequested,
+                    Status = "Pending"
+                };
+                await _requestService.AddRequestAsync(request);
+                TempData["SuccessMessage"] = "Blood request submitted successfully.";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, string newStatus)
+        {
+            var request = await _requestService.GetRequestByIdAsync(id);
+            if (request != null)
+            {
+                request.Status = newStatus;
+                await _requestService.UpdateRequestAsync(request);
+                TempData["SuccessMessage"] = $"Request status updated to {newStatus}.";
+            }
+            return RedirectToAction(nameof(Index));
+        }
+    }
+}

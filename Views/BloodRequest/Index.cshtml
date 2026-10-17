@@ -1,0 +1,142 @@
+@model IEnumerable<BloodBankManagement.ViewModels.BloodRequestViewModel>
+@using BloodBankManagement.Models
+@{
+    ViewData["Title"] = "Blood Requests";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4 mb-5">
+    <!-- Header Banner with Authentic Clinical Photo -->
+    <div class="page-header-banner d-flex justify-content-between align-items-center">
+        <img src="~/images/blood_request_bg.jpg" alt="Blood Requests Background" class="banner-bg-img" />
+        <div class="position-relative" style="z-index: 1;">
+            <h2 class="auth-title fw-bold text-white mb-1"><i class="fas fa-hand-holding-water me-2 text-warning"></i> Blood Requests</h2>
+            <p class="text-light opacity-90 small mb-0">Manage and track blood requests from recipients and hospitals</p>
+        </div>
+        @if (User.IsInRole(Roles.Hospital) || User.IsInRole(Roles.Recipient) || User.IsInRole(Roles.Admin))
+        {
+            <div class="position-relative" style="z-index: 1;">
+                <a asp-action="Create" class="btn auth-btn rounded-pill px-4 shadow-lg">
+                    <i class="fas fa-plus me-2"></i> Submit Blood Request
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="glass-panel rounded-4 overflow-hidden p-3">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0" style="background: transparent;">
+                <thead class="border-bottom border-secondary" style="background: rgba(15, 23, 42, 0.6);">
+                    <tr>
+                        <th class="py-3 px-3">Req #</th>
+                        <th class="py-3 px-3">Requester / Facility</th>
+                        <th class="py-3 px-3">Patient Details</th>
+                        <th class="py-3 px-3">Group</th>
+                        <th class="py-3 px-3">Units</th>
+                        <th class="py-3 px-3">Request Date</th>
+                        <th class="py-3 px-3">Status</th>
+                        @if (User.IsInRole(Roles.Admin))
+                        {
+                            <th class="py-3 px-3 text-end">Admin Action</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var requests = Model ?? Enumerable.Empty<BloodBankManagement.ViewModels.BloodRequestViewModel>(); }
+                    @foreach (var request in requests)
+                    {
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td class="py-3 px-3 fw-bold text-muted">#@request.Id</td>
+                            <td class="py-3 px-3 text-white fw-semibold">
+                                @if (!string.IsNullOrEmpty(request.HospitalName))
+                                {
+                                    <span><i class="fas fa-hospital text-info me-2"></i>@request.HospitalName</span>
+                                }
+                                else if (!string.IsNullOrEmpty(request.RecipientName))
+                                {
+                                    <span><i class="fas fa-user text-warning me-2"></i>@request.RecipientName</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Direct Request</span>
+                                }
+                            </td>
+                            <td class="py-3 px-3 text-light small">
+                                @if (!string.IsNullOrEmpty(request.PatientName))
+                                {
+                                    <div><strong class="text-white">@request.PatientName</strong></div>
+                                    <span class="text-muted">@(request.PatientDetails ?? "")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">N/A</span>
+                                }
+                            </td>
+                            <td class="py-3 px-3">
+                                <span class="badge bg-danger rounded-pill px-3 py-1 fw-bold fs-6">@request.BloodGroup</span>
+                            </td>
+                            <td class="py-3 px-3 fw-bold text-white fs-6">@request.UnitsRequested</td>
+                            <td class="py-3 px-3 text-muted small">@request.RequestDate.ToString("MMM dd, yyyy HH:mm")</td>
+                            <td class="py-3 px-3">
+                                @if (request.Status == "Pending")
+                                {
+                                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill"><i class="fas fa-hourglass-half me-1"></i> Pending</span>
+                                }
+                                else if (request.Status == "Approved")
+                                {
+                                    <span class="badge bg-success px-3 py-2 rounded-pill"><i class="fas fa-check-circle me-1"></i> Approved</span>
+                                }
+                                else if (request.Status == "Rejected")
+                                {
+                                    <span class="badge bg-danger px-3 py-2 rounded-pill"><i class="fas fa-times-circle me-1"></i> Rejected</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary px-3 py-2 rounded-pill">@request.Status</span>
+                                }
+                            </td>
+                            @if (User.IsInRole(Roles.Admin))
+                            {
+                                <td class="py-3 px-3 text-end">
+                                    @if (request.Status == "Pending")
+                                    {
+                                        <div class="d-inline-flex gap-1">
+                                            <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                                <input type="hidden" name="id" value="@request.Id" />
+                                                <input type="hidden" name="newStatus" value="Approved" />
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill px-3" title="Approve & Deduct Stock">
+                                                    <i class="fas fa-check me-1"></i> Approve
+                                                </button>
+                                            </form>
+                                            <form asp-action="UpdateStatus" method="post" class="d-inline">
+                                                <input type="hidden" name="id" value="@request.Id" />
+                                                <input type="hidden" name="newStatus" value="Rejected" />
+                                                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3" title="Reject Request">
+                                                    <i class="fas fa-times me-1"></i> Reject
+                                                </button>
+                                            </form>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted small">Processed</span>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                    @if (!requests.Any())
+                    {
+                        <tr>
+                            <td colspan="@(User.IsInRole(Roles.Admin) ? 8 : 7)" class="text-center py-5">
+                                <i class="fas fa-inbox fa-3x text-muted mb-3 d-block"></i>
+                                <span class="text-muted">No blood requests submitted.</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
